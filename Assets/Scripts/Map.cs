@@ -81,6 +81,7 @@ public class Map
         MapGridObject[,] gridArray = grid.GetArray();
         if (MainMenu.Loading == false)
         {
+            TextStatsUpdate.LoadTime(0.0f);
             int mines = Mines;
             while (mines > 0)
             {

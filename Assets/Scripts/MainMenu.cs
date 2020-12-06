@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGameEasy()
     {
         GameHandler.diff = GameHandler.Difficulty.Easy;
-        //Loading = false;
+        Loading = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public void PlayGameMedium()
