@@ -55,6 +55,11 @@ public class HighscoreTable : MonoBehaviour
             string JsonString = PlayerPrefs.GetString("HSTable-Hard");
             highscores = JsonUtility.FromJson<HS>(JsonString);
         }
+        else if (diff == GameHandler.Difficulty.Custom)
+        {
+            string JsonString = PlayerPrefs.GetString("HSTable-Custom");
+            highscores = JsonUtility.FromJson<HS>(JsonString);
+        }
 
         if (highscores == null)
         {
@@ -128,6 +133,11 @@ public class HighscoreTable : MonoBehaviour
             string JsonString = PlayerPrefs.GetString("HSTable-Hard");
             highscores = JsonUtility.FromJson<HS>(JsonString);
         }
+        else if (GameHandler.diff == GameHandler.Difficulty.Custom)
+        {
+            string JsonString = PlayerPrefs.GetString("HSTable-Custom");
+            highscores = JsonUtility.FromJson<HS>(JsonString);
+        }
 
         if (highscores == null)
         {
@@ -153,6 +163,12 @@ public class HighscoreTable : MonoBehaviour
             PlayerPrefs.SetString("HSTable-Hard", json);
             PlayerPrefs.Save();
         }
+        else if (GameHandler.diff == GameHandler.Difficulty.Custom)
+        {
+            string json = JsonUtility.ToJson(highscores);
+            PlayerPrefs.SetString("HSTable-Custom", json);
+            PlayerPrefs.Save();
+        }
     }
     private static void CreateEntry(HighscoreEntry scoreEntry, Transform container, List<Transform> transformList)
     {
@@ -167,24 +183,82 @@ public class HighscoreTable : MonoBehaviour
         transformList.Add(entryTransform);
     }
 
+    public void ResetTable()
+    {
+        highscores = new HS { highScoreEntryList = new List<HighscoreEntry>() };
+
+        if (MenuTableDiff == GameHandler.Difficulty.Easy)
+        {
+            string json = JsonUtility.ToJson(highscores);
+            PlayerPrefs.SetString("HSTable", json);
+            PlayerPrefs.Save();
+        }
+        else if (MenuTableDiff == GameHandler.Difficulty.Medium)
+        {
+            string json = JsonUtility.ToJson(highscores);
+            PlayerPrefs.SetString("HSTable-Medium", json);
+            PlayerPrefs.Save();
+        }
+        else if (MenuTableDiff == GameHandler.Difficulty.Hard)
+        {
+            string json = JsonUtility.ToJson(highscores);
+            PlayerPrefs.SetString("HSTable-Hard", json);
+            PlayerPrefs.Save();
+        }
+        else if (MenuTableDiff == GameHandler.Difficulty.Custom)
+        {
+            string json = JsonUtility.ToJson(highscores);
+            PlayerPrefs.SetString("HSTable-Custom", json);
+            PlayerPrefs.Save();
+        }
+
+        Generate(MenuTableDiff);
+    }
     public static void SetTableVisibility(bool value)
     {
         scoreboard.SetActive(value);
     }
 
-    public void ResetTable()
-    {
-        // Reset table code
-    }
-
     public void TableLeftArrow()
     {
-        // Left arrow code
+        switch (MenuTableDiff)
+        {
+            case GameHandler.Difficulty.Easy:
+                MenuTableDiff = GameHandler.Difficulty.Custom;
+                break;
+            case GameHandler.Difficulty.Medium:
+                MenuTableDiff = GameHandler.Difficulty.Easy;
+                break;
+            case GameHandler.Difficulty.Hard:
+                MenuTableDiff = GameHandler.Difficulty.Medium;
+                break;
+            case GameHandler.Difficulty.Custom:
+                MenuTableDiff = GameHandler.Difficulty.Hard;
+                break;
+        }
+        Generate(MenuTableDiff);
+        TableNameText.text = MenuTableDiff.ToString().ToUpper();
     }
 
     public void TableRightArrow()
     {
-        // Right arrow code
+        switch (MenuTableDiff)
+        {
+            case GameHandler.Difficulty.Easy:
+                MenuTableDiff = GameHandler.Difficulty.Medium;
+                break;
+            case GameHandler.Difficulty.Medium:
+                MenuTableDiff = GameHandler.Difficulty.Hard;
+                break;
+            case GameHandler.Difficulty.Hard:
+                MenuTableDiff = GameHandler.Difficulty.Custom;
+                break;
+            case GameHandler.Difficulty.Custom:
+                MenuTableDiff = GameHandler.Difficulty.Easy;
+                break;
+        }
+        Generate(MenuTableDiff);
+        TableNameText.text = MenuTableDiff.ToString().ToUpper();
     }
 }
 

@@ -32,7 +32,7 @@ public class Map
     {
         Win,
         Lose,
-    }           
+    }
     public Map()
     {
         GameObject thePlayer = GameObject.Find("MinesweeperGameHandler");
@@ -43,7 +43,7 @@ public class Map
             size = 5;
             Mines = 3;
         }
-        else if(GameHandler.diff == GameHandler.Difficulty.Medium)
+        else if (GameHandler.diff == GameHandler.Difficulty.Medium)
         {
             size = 10;
             Mines = 10;
@@ -53,11 +53,16 @@ public class Map
             size = 10;
             Mines = 15;
         }
+        else if (GameHandler.diff == GameHandler.Difficulty.Custom)
+        {
+            size = sizeValue;
+            Mines = minesValue;
+        }
 
         grid = new Grid<MapGridObject>(size, size, 100f, (10 - size) * new Vector3(50, 0), (Grid<MapGridObject> g, int x, int y) => new MapGridObject(g, x, y));
         Covered = grid.GetWidth() * grid.GetWidth();
-    } 
-    
+    }
+
     public Grid<MapGridObject> GetGrid()
     {
         return grid;
@@ -66,7 +71,7 @@ public class Map
     public void SetSprite(Vector3 worldPosition, MapGridObject.Type typ)
     {
         MapGridObject ob = grid.GetValue(worldPosition);
-        if(ob != null)
+        if (ob != null)
         {
             ob.SetSprite(typ);
         }
@@ -191,12 +196,12 @@ public class Map
             {
                 for (int y = 0; y < size; y++)
                 {
-                    if(data.RevealedList[y + (x * size)] == true)
+                    if (data.RevealedList[y + (x * size)] == true)
                     {
                         gridArray[x, y].LeftClick(this);
                     }
 
-                    if(data.FlaggedList[y + (x * size)] == true)
+                    if (data.FlaggedList[y + (x * size)] == true)
                     {
                         gridArray[x, y].RightClick();
                         Debug.Log("Loading saved data!");
@@ -229,8 +234,8 @@ public class Map
             {
                 RevealColumn(x);
             }
-        } 
-        else if(endType == EndType.Win)
+        }
+        else if (endType == EndType.Win)
         {
             AddButtonScript.SetAddVisibility(true);
             Debug.Log("YOU WON!");

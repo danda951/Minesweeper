@@ -31,7 +31,14 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayGameCustom()
     {
-        // Custom game create code
+        if (SizeInput.text != "" && MinesInput.text != "" && Int32.Parse(SizeInput.text) > 1 && Int32.Parse(MinesInput.text) > 0 && Int32.Parse(SizeInput.text) <= 10 && (Int32.Parse(SizeInput.text) * Int32.Parse(SizeInput.text) - 2) >= Int32.Parse(MinesInput.text))
+        {
+            Map.sizeValue = Int32.Parse(SizeInput.text);
+            Map.minesValue = Int32.Parse(MinesInput.text);
+            GameHandler.diff = GameHandler.Difficulty.Custom;
+            Loading = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public void GenerateTable()
@@ -41,7 +48,11 @@ public class MainMenu : MonoBehaviour
 
     public void PressLoadButton()
     {
-        // loading button
+        Loading = true;
+        string JsonString = PlayerPrefs.GetString("Save");
+        Data data = JsonUtility.FromJson<Data>(JsonString);
+        GameHandler.diff = data.diff;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Back()

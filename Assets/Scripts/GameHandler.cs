@@ -23,6 +23,7 @@ public class GameHandler : MonoBehaviour
         Medium,
         Easy,
         Hard,
+        Custom,
     }
 
     public Map map { private get; set; }
@@ -60,7 +61,7 @@ public class GameHandler : MonoBehaviour
     {
         if (gameStatus == GameStatus.Running)
         {
-            if(map.Covered == map.Mines && TextStatsUpdate.flagText == 0)
+            if (map.Covered == map.Mines && TextStatsUpdate.flagText == 0)
             {
                 map.GameOver(Map.EndType.Win);
             }
@@ -101,9 +102,9 @@ public class GameHandler : MonoBehaviour
         data.TypeList = new List<MapGridObject.Type>();
         data.RevealedList = new List<bool>();
         data.FlaggedList = new List<bool>();
-        for (int x=0; x < map.size; x++)
+        for (int x = 0; x < map.size; x++)
         {
-            for(int y=0; y < map.size; y++)
+            for (int y = 0; y < map.size; y++)
             {
                 data.TypeList.Add(map.GetGrid().GetArray()[x, y].type);
                 data.RevealedList.Add(map.GetGrid().GetArray()[x, y].isRevealed);
@@ -113,7 +114,7 @@ public class GameHandler : MonoBehaviour
         data.Mines = map.Mines;
         data.Size = map.size;
         data.diff = diff;
-        data.time = TextStatsUpdate.timer+1.0f;
+        data.time = TextStatsUpdate.timer + 1.0f;
 
         string json = JsonUtility.ToJson(data);
         PlayerPrefs.SetString("Save", json);

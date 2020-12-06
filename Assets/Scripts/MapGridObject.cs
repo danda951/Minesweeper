@@ -52,13 +52,13 @@ public class MapGridObject
     }
     public void RightClick()
     {
-        if(isFlagged && isRevealed != true)
+        if (isFlagged && isRevealed != true)
         {
             isFlagged = false;
             gameHandler.TextureDel(flagTexture);
             TextStatsUpdate.flagText++;
         }
-        else if(!isFlagged && isRevealed != true && TextStatsUpdate.flagText > 0)
+        else if (!isFlagged && isRevealed != true && TextStatsUpdate.flagText > 0)
         {
             isFlagged = true;
             flagTexture = gameHandler.Render(RenderTexture(), gameHandler.FlagTexture);
@@ -70,24 +70,24 @@ public class MapGridObject
     public void CheckAround(Map map)
     {
         MapGridObject[,] gridArray = map.GetGrid().GetArray();
-        if ((x+1) < map.GetGrid().GetWidth() && gridArray[x+1, y].type != MapGridObject.Type.Mine)
+        if ((x + 1) < map.GetGrid().GetWidth() && gridArray[x + 1, y].type != MapGridObject.Type.Mine)
         {
             gridArray[x + 1, y].LeftClick(map);
         }
-        
-        if ((x - 1) >= 0 && gridArray[x-1, y].type != MapGridObject.Type.Mine)
+
+        if ((x - 1) >= 0 && gridArray[x - 1, y].type != MapGridObject.Type.Mine)
         {
             gridArray[x - 1, y].LeftClick(map);
         }
-        
-        if ((y + 1) < map.GetGrid().GetHeight() && gridArray[x, y+1].type != MapGridObject.Type.Mine)
+
+        if ((y + 1) < map.GetGrid().GetHeight() && gridArray[x, y + 1].type != MapGridObject.Type.Mine)
         {
-            gridArray[x, y+1].LeftClick(map);
+            gridArray[x, y + 1].LeftClick(map);
         }
-        
-        if ((y - 1) >= 0 && gridArray[x, y-1].type != MapGridObject.Type.Mine)
+
+        if ((y - 1) >= 0 && gridArray[x, y - 1].type != MapGridObject.Type.Mine)
         {
-            gridArray[x, y-1].LeftClick(map);
+            gridArray[x, y - 1].LeftClick(map);
         }
 
         if ((x + 1) < map.GetGrid().GetWidth() && (y + 1) < map.GetGrid().GetHeight() && gridArray[x + 1, y + 1].type != MapGridObject.Type.Mine)
@@ -110,19 +110,19 @@ public class MapGridObject
     }
     public void LeftClick(Map map)
     {
-        if(type == Type.Mine && isFlagged != true)
+        if (type == Type.Mine && isFlagged != true)
         {
             map.GameOver(Map.EndType.Lose);
         }
-        
-        if(isRevealed == false && isFlagged == false && type != Type.Empty && type != Type.Mine)
+
+        if (isRevealed == false && isFlagged == false && type != Type.Empty && type != Type.Mine)
         {
             isRevealed = true;
             gameHandler.TextureDel(coverTexture);
             gameHandler.LowerCovered();
         }
 
-        else if(isRevealed == false && isFlagged == false && type == Type.Empty)
+        else if (isRevealed == false && isFlagged == false && type == Type.Empty)
         {
             isRevealed = true;
             gameHandler.TextureDel(coverTexture);
@@ -143,7 +143,7 @@ public class MapGridObject
 
     public override string ToString()
     {
-        if (isFlagged) 
+        if (isFlagged)
         {
             return type.ToString() + "\nFLAG";
         }

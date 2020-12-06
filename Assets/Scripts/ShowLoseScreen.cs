@@ -16,7 +16,7 @@ public class ShowLoseScreen : MonoBehaviour
 
     public static void SetLoseVisibility(bool value)
     {
-        loseScreen.SetActive(value); 
+        loseScreen.SetActive(value);
         saveButton.SetActive(!value);
     }
 
