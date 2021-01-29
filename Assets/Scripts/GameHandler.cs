@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CodeMonkey.Utils;
 using UnityEngine.Experimental.Playables;
 using System.Data;
 using System.Transactions;
@@ -70,7 +69,7 @@ public class GameHandler : MonoBehaviour
             {
                 try
                 {
-                    map.GetGrid().GetValue(UtilsClass.GetMouseWorldPosition()).LeftClick(map);
+                    map.GetGrid().GetValue(GetMouseWorldPosition()).LeftClick(map);
                 }
                 catch { }
             }
@@ -79,7 +78,7 @@ public class GameHandler : MonoBehaviour
             {
                 try
                 {
-                    map.GetGrid().GetValue(UtilsClass.GetMouseWorldPosition()).RightClick();
+                    map.GetGrid().GetValue(GetMouseWorldPosition()).RightClick();
                 }
                 catch { }
             }
@@ -120,6 +119,19 @@ public class GameHandler : MonoBehaviour
         PlayerPrefs.SetString("Save", json);
         PlayerPrefs.Save();
     }
+
+    public static Vector3 GetMouseWorldPosition()
+    {
+        Vector3 vec = GetMouseWorldPositionWithZ(Input.mousePosition, Camera.main);
+        vec.z = 0f;
+        return vec;
+    }
+    public static Vector3 GetMouseWorldPositionWithZ(Vector3 screenPosition, Camera worldCamera)
+    {
+        Vector3 worldPosition = worldCamera.ScreenToWorldPoint(screenPosition);
+        return worldPosition;
+    }
+
 }
 
 public class Data

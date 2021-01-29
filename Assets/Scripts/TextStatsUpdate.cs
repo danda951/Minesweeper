@@ -24,7 +24,7 @@ public class TextStatsUpdate : MonoBehaviour
         }
         else if (GameHandler.diff == GameHandler.Difficulty.Hard)
         {
-            flagText = 15;
+            flagText = 25;
         }
         else if (GameHandler.diff == GameHandler.Difficulty.Custom)
         {

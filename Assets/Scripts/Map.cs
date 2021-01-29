@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Jobs;
-using CodeMonkey.Utils;
 using System.Threading;
 using UnityEngine.Rendering;
 using UnityEditor;
@@ -38,6 +37,11 @@ public class Map
         GameObject thePlayer = GameObject.Find("MinesweeperGameHandler");
         gameHandler = thePlayer.GetComponent<GameHandler>();
 
+        GameObject cam = GameObject.Find("Main Camera");
+        Camera mainCamera = cam.GetComponent<Camera>();
+        mainCamera.orthographicSize = 722.1054f;
+
+        int o = 0;
         if (GameHandler.diff == GameHandler.Difficulty.Easy)
         {
             size = 5;
@@ -50,8 +54,10 @@ public class Map
         }
         else if (GameHandler.diff == GameHandler.Difficulty.Hard)
         {
-            size = 10;
-            Mines = 15;
+            size = 15;
+            Mines = 25;
+            o = 50;
+            mainCamera.orthographicSize = 1100f;
         }
         else if (GameHandler.diff == GameHandler.Difficulty.Custom)
         {
@@ -59,7 +65,7 @@ public class Map
             Mines = minesValue;
         }
 
-        grid = new Grid<MapGridObject>(size, size, 100f, (10 - size) * new Vector3(50, 0), (Grid<MapGridObject> g, int x, int y) => new MapGridObject(g, x, y));
+        grid = new Grid<MapGridObject>(size, size, 100f, (10 - size) * new Vector3(50, o), (Grid<MapGridObject> g, int x, int y) => new MapGridObject(g, x, y));
         Covered = grid.GetWidth() * grid.GetWidth();
     }
 

@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class MapGridObject
 {
-    public enum Type
+    public enum Type // Enum který slouží k určení typu daného hracího pole
     {
-        Empty,
-        Mine,
-        MineNum_1,
-        MineNum_2,
+        Empty, // Prázdné
+        Mine, // Obsahuje minu
+        MineNum_1, // 1 mina v okolí
+        MineNum_2, // ...
         MineNum_3,
         MineNum_4,
         MineNum_5,
@@ -19,17 +19,18 @@ public class MapGridObject
         MineNum_8,
     }
 
-    private Grid<MapGridObject> grid;
-    private int x;
-    private int y;
-    public Type type { set; get; }
-    public bool isFlagged { set; get; } = false;
-    public bool isRevealed { set; get; } = false;
+    private Grid<MapGridObject> grid; // Grid ve kterém je buňka umístěna
+    private int x; // Pozice X v matici
+    private int y; // Pozice Y v matici
+    public Type type { set; get; } // Její typ
+    public bool isFlagged { set; get; } = false; // Jestli je označená vlajkou
+    public bool isRevealed { set; get; } = false; // Jestli již je odhalena ("rozkliknuta")
     private GameHandler gameHandler;
-    public GameObject flagTexture { set; get; }
-    public GameObject coverTexture { set; get; }
-    public GameObject ownTexture { set; get; }
-    public GameObject backgroundTexture { get; set; }
+    private AudioManagerScript audioManager;
+    public GameObject flagTexture { set; get; } // Textura praporu
+    public GameObject coverTexture { set; get; } // Textura zakrytí
+    public GameObject ownTexture { set; get; } // Textura pod pokrývkou
+    public GameObject backgroundTexture { get; set; } // Pozadí buňky
 
     public MapGridObject(Grid<MapGridObject> grid, int x, int y)
     {
@@ -38,6 +39,9 @@ public class MapGridObject
         this.y = y;
         GameObject thePlayer = GameObject.Find("MinesweeperGameHandler");
         gameHandler = thePlayer.GetComponent<GameHandler>();
+
+        GameObject m = GameObject.Find("AudioManager");
+        audioManager = m.GetComponent<AudioManagerScript>();
     }
 
     public void SetSprite(Type typ)
@@ -54,12 +58,14 @@ public class MapGridObject
     {
         if (isFlagged && isRevealed != true)
         {
+            audioManager.PlayRemoveFlagSound();
             isFlagged = false;
             gameHandler.TextureDel(flagTexture);
             TextStatsUpdate.flagText++;
         }
         else if (!isFlagged && isRevealed != true && TextStatsUpdate.flagText > 0)
         {
+            audioManager.PlayAddFlagSound();
             isFlagged = true;
             flagTexture = gameHandler.Render(RenderTexture(), gameHandler.FlagTexture);
             TextStatsUpdate.flagText--;
@@ -106,17 +112,19 @@ public class MapGridObject
         {
             gridArray[x - 1, y + 1].LeftClick(map);
         }
-
     }
+
     public void LeftClick(Map map)
     {
         if (type == Type.Mine && isFlagged != true)
         {
+            audioManager.PlayExplosionFX();
             map.GameOver(Map.EndType.Lose);
         }
 
         if (isRevealed == false && isFlagged == false && type != Type.Empty && type != Type.Mine)
         {
+            audioManager.PlayRemoveSingleCoverFX();
             isRevealed = true;
             gameHandler.TextureDel(coverTexture);
             gameHandler.LowerCovered();
@@ -124,6 +132,7 @@ public class MapGridObject
 
         else if (isRevealed == false && isFlagged == false && type == Type.Empty)
         {
+            audioManager.PlayRemoveMultipleCoverFX();
             isRevealed = true;
             gameHandler.TextureDel(coverTexture);
             gameHandler.LowerCovered();
