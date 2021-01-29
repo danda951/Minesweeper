@@ -17,6 +17,7 @@ public class Map
     public static int sizeValue;
     public int size;
     public int Covered;
+    public static GameObject saveButton;
 
     public List<MapGridObject> GetRevealedObjects()
     {
@@ -34,6 +35,8 @@ public class Map
     }
     public Map()
     {
+        saveButton = GameObject.Find("SaveButton");
+
         GameObject thePlayer = GameObject.Find("MinesweeperGameHandler");
         gameHandler = thePlayer.GetComponent<GameHandler>();
 
@@ -247,6 +250,5 @@ public class Map
             AddButtonScript.SetAddVisibility(true);
             Debug.Log("YOU WON!");
         }
-        // UtilsClass.CreateWorldText("Konec Hry!", null,  new Vector3(0, 50), 100, Color.white, TextAnchor.MiddleCenter);
     }
 }

@@ -11,6 +11,9 @@ public class MainMenu : MonoBehaviour
     public TMP_InputField SizeInput;
     public TMP_InputField MinesInput;
     public static bool Loading = false;
+    public Image audioImage;
+    public Sprite muteSprite;
+    public Sprite unmuteSprite;
     public void PlayGameEasy()
     {
         GameHandler.diff = GameHandler.Difficulty.Easy;
@@ -53,6 +56,20 @@ public class MainMenu : MonoBehaviour
         Data data = JsonUtility.FromJson<Data>(JsonString);
         GameHandler.diff = data.diff;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void MuteButton()
+    {
+        if (AudioManagerScript.muted)
+        {
+            AudioManagerScript.muted = false;
+            audioImage.sprite = unmuteSprite;
+        }
+        else
+        {
+            AudioManagerScript.muted = true;
+            audioImage.sprite = muteSprite;
+        }
     }
 
     public void Back()
