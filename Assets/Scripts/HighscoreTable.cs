@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEditor.UI;
 
 public class HighscoreTable : MonoBehaviour
 {

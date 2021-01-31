@@ -72,6 +72,11 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public void HelpButton()
+    {
+        Application.OpenURL("https://cs.wikipedia.org/wiki/Hled%C3%A1n%C3%AD_min");
+    }
+
     public void Back()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
