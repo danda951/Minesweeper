@@ -248,6 +248,7 @@ public class Map
         else if (endType == EndType.Win)
         {
             AddButtonScript.SetAddVisibility(true);
+            ShowLoseScreen.saveButton.SetActive(false);
             Debug.Log("YOU WON!");
         }
     }

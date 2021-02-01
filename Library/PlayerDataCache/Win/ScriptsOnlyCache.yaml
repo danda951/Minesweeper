@@ -717,4 +717,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/MainMenu.unity
   - Assets/Scenes/GameScene.unity
-  playerPath: C:/Users/danfr/Desktop/Minesweeper/Minesweeper.exe
+  playerPath: C:/Users/danfr/Desktop/Minesweeper-build/Minesweeper.exe
