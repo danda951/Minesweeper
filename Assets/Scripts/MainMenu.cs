@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayGameCustom()
     {
-        if (SizeInput.text != "" && MinesInput.text != "" && Int32.Parse(SizeInput.text) > 1 && Int32.Parse(MinesInput.text) > 0 && Int32.Parse(SizeInput.text) <= 10 && (Int32.Parse(SizeInput.text) * Int32.Parse(SizeInput.text) - 2) >= Int32.Parse(MinesInput.text))
+        if (SizeInput.text != "" && MinesInput.text != "" && Int32.Parse(SizeInput.text) > 1 && Int32.Parse(MinesInput.text) > 0 && Int32.Parse(SizeInput.text) <= 10 && (Int32.Parse(SizeInput.text) * Int32.Parse(SizeInput.text) - Int32.Parse(SizeInput.text)) >= Int32.Parse(MinesInput.text))
         {
             Map.sizeValue = Int32.Parse(SizeInput.text);
             Map.minesValue = Int32.Parse(MinesInput.text);
